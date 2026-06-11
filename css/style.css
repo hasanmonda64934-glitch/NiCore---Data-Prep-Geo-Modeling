@@ -1,0 +1,96 @@
+        /* Blueprint / Technical Background */
+        body {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        
+        td[contenteditable="true"] { cursor: cell; transition: all 0.2s; }
+        td[contenteditable="true"]:focus { background-color: #f0fdfa; outline: 2px solid #0d9488; outline-offset: -2px; color: #0f766e; font-weight: 600;}
+        
+        @keyframes flashRow { 0% { background-color: #fef08a; } 100% { background-color: transparent; } }
+        .flash-highlight { animation: flashRow 2s ease-out; }
+        
+        /* Custom checkbox styles */
+        .custom-checkbox:checked + label { background-color: #f0fdfa; border-color: #0d9488; color: #0f766e; }
+        
+        /* Toast animation */
+        @keyframes slideInUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .toast-enter { animation: slideInUp 0.3s ease-out forwards; }
+        .toast-exit { animation: fadeOut 0.3s ease-out forwards; }
+
+        /* Downhole Log specific styles */
+        .litho-block { transition: all 0.2s; cursor: crosshair; }
+        .litho-block:hover { filter: brightness(1.1); outline: 2px solid #334155; outline-offset: -2px; z-index: 10; }
+
+/* --- PRINT STYLES (NATIVE BROWSER PRINT) --- */
+@media print {
+    /* Sembunyikan semua UI aplikasi */
+    body * { visibility: hidden; }
+    
+    /* Hanya tampilkan wadah cetak kita */
+    #print-zone, #print-zone * {
+        visibility: visible;
+    }
+    
+    /* Reset halaman agar full screen */
+    #print-zone {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Paksa setiap lubang bor pindah ke halaman baru */
+    .print-page {
+        page-break-after: always;
+        break-after: page;
+        margin-bottom: 20px;
+    }
+    
+    /* Hapus halaman kosong di akhir */
+    .print-page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+    }
+
+    /* Pastikan warna latar (background-color) ikut tercetak */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Modifikasi kecil untuk kanvas Chart.js agar muat di kertas */
+    .print-page canvas {
+        max-height: 90vh !important; /* Batasi tinggi grafik agar tidak terpotong ke halaman berikutnya */
+    }
+}
+/* Memberikan warna dasar pada kanvas Peta Leaflet mode Standby */
+.leaflet-container {
+    background-color: #f1f5f9; /* Warna abu-abu kebiruan terang */
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+/* --- FIX FOR 3D CANVAS IN HIDDEN TABS --- */
+#block-canvas-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    outline: none;
+}
